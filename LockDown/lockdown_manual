@@ -15,7 +15,7 @@ Fase 1: Analisis de Red (pcap):
 Q1: Direccion IP del atacante tras el reconocimiento inicial
 Respuesta: "10.0.2.4"
 Analisis: Mediante la inspeccion de trafico en Wireshark y el analisis de conversacion TCP/IPv4 que nos brinda esta herramienta, pudimos identifar un volumen masivo de peticiones y escaneos dirigidos hacia la direccion IP del servidor vulnerable ("10.0.2.15")
-Captura:
+![img alt](https://github.com/Hormando/Imagenes/blob/main/LockDownImg/LockDown_1.png)
 
 
 Q2: Herramienta de enumeracion HTTP utilizada:
