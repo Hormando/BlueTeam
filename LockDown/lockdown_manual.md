@@ -15,25 +15,29 @@ Fase 1: Analisis de Red (pcap):
 Q1: Direccion IP del atacante tras el reconocimiento inicial
 Respuesta: "10.0.2.4"
 Analisis: Mediante la inspeccion de trafico en Wireshark y el analisis de conversacion TCP/IPv4 que nos brinda esta herramienta, pudimos identifar un volumen masivo de peticiones y escaneos dirigidos hacia la direccion IP del servidor vulnerable ("10.0.2.15")
-![img alt](https://github.com/Hormando/Imagenes/blob/main/LockDownImg/LockDown_1.png)
 
+![Q1 img](https://github.com/Hormando/Imagenes/blob/main/LockDownImg/LockDown_0.png)
 
 Q2: Herramienta de enumeracion HTTP utilizada:
 Respuesta: Nmap
 Analisis: Al filtrar las peticiones HTTP ("http.request") provenientes de la IP del atacante, se examinó el encabezado `User-Agent`, revelando la firma del motor de escaneo de Nmap.
-Captura:
+
+![Q2 img](https://github.com/Hormando/Imagenes/blob/main/LockDownImg/LockDown_2.png)
 
 Q3: Rutas UNC (Ubicacion de recursos en la red) accedidas durante la enumeración SMB:
 Respuesta: \\10.0.2.15\Documents, \\10.0.2.15\IPC$
 Analisis: Filtrando por solicitudes SMB2 `Tree Connect Request`, se identificaron los nombres de recursos compartidos a los que el atacante intentó acceder en el servidor IIS.
-Captura:
+
+![Q3 img](https://github.com/Hormando/Imagenes/blob/main/LockDownImg/LockDown_3.png)
 
 Q4: Nombre de la carga útil / archivo malicioso subido:
 Respuesta: shell.aspx
 Analisis: Se rastreó la secuencia de comandos SMB (`Create`, `Write`, `Close`) donde el atacante depositó un archivo ejecutable/script malicioso dentro del recurso compartido accesible vía web.
-Captura:
+
+![Q4](https://github.com/Hormando/Imagenes/blob/main/LockDownImg/LockDown_4.png)
 
 Q5: Puerto de escucha para la Reverse Shell:
 Respuesta: 4443
 Analisis: Se filtraron los paquetes de establecimiento de conexión TCP (`SYN`) salientes desde la víctima (`10.0.2.15`) hacia la IP del atacante (`10.0.2.4`), identificando el puerto no convencional configurado en el listener del atacante.
-Captura:
+
+![Q5 img](https://github.com/Hormando/Imagenes/blob/main/LockDownImg/LockDown_5.png)
